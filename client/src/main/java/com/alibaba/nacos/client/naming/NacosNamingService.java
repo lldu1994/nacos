@@ -184,6 +184,9 @@ public class NacosNamingService implements NamingService {
     }
 
     @Override
+    /**
+     *  springCloud-alibaba-nacos-discovery 连接nacos 客户端的入口
+     */
     public void registerInstance(String serviceName, Instance instance) throws NacosException {
         registerInstance(serviceName, Constants.DEFAULT_GROUP, instance);
     }
@@ -191,7 +194,11 @@ public class NacosNamingService implements NamingService {
     @Override
     public void registerInstance(String serviceName, String groupName, Instance instance) throws NacosException {
 
+        /**
+         * 判断是不是临时的实例
+         */
         if (instance.isEphemeral()) {
+            //创建心跳对象
             BeatInfo beatInfo = new BeatInfo();
             beatInfo.setServiceName(NamingUtils.getGroupedName(serviceName, groupName));
             beatInfo.setIp(instance.getIp());
@@ -202,6 +209,7 @@ public class NacosNamingService implements NamingService {
             beatInfo.setScheduled(false);
             beatInfo.setPeriod(instance.getInstanceHeartBeatInterval());
 
+            //首先调用心跳检测接口
             beatReactor.addBeatInfo(NamingUtils.getGroupedName(serviceName, groupName), beatInfo);
         }
 

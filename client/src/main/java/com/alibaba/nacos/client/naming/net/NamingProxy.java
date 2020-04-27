@@ -459,6 +459,9 @@ public class NamingProxy {
 
         if (servers != null && !servers.isEmpty()) {
 
+            /**
+             * 获取services.get(index) 里面的值时怎么不直接用零
+             */
             Random random = new Random(System.currentTimeMillis());
             int index = random.nextInt(servers.size());
 

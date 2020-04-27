@@ -382,6 +382,10 @@ public class InstanceController {
             instance.setMetadata(UtilsAndCommons.parseMetadata(metadata));
         }
 
+        /**
+         * ①校验ip+端口号是不是正确
+         * ②校验权重是不是在这个范围之内 0-10000.0D
+         */
         instance.validate();
 
         return instance;
